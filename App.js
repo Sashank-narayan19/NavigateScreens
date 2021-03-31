@@ -5,7 +5,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 //import {createDrawernavigator } from '@react-navigation/drawer';
-import {SignIn, CreateAccount, SearchTags, SearchList} from './screens/SignIn';
+import {SignIn, CreateAccount, SearchTags, SearchList, SignInAccount} from './screens/SignIn';
 //import {CreateAccount} from './screens/CreateAccount';
 
 const AuthStack = createStackNavigator();
@@ -17,6 +17,7 @@ const SignInScreen = () => {
   <AuthStack.Navigator>
     <AuthStack.Screen name='SignIn' component={SignIn}/>
     <AuthStack.Screen name='CreateAccount' component={CreateAccount}/> 
+    <AuthStack.Screen name='SignInAccount' component={SignInAccount}/> 
   </AuthStack.Navigator>
   );
 }

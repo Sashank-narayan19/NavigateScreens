@@ -1,15 +1,20 @@
-import {View, Text, StyleSheet , Button, TextInput} from 'react-native';
+import {View, Text, StyleSheet , Button, TextInput, Alert} from 'react-native';
 import React from 'react';
 import { NavigationHelpersContext } from '@react-navigation/core';
 import { useEffect, useState } from 'react';
 import 'firebase/firestore';
 //import '@react-native-firebase/database';
 import * as firebase from 'firebase';
+//import { ImageView, PhotoView } from 'react-native-firebaseui';
+//import StyledAuth from 'react-native-firebaseui';
+import 'firebase/auth';
 
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     apiKey: "AIzaSyDZn1_zRPQn8ruAxCy9uzEW4HkO2lNUhqg",
     authDomain: "cafe-ad181.firebaseapp.com",
+    databaseURL: "https://cafe-ad181-default-rtdb.firebaseio.com",
     projectId: "cafe-ad181",
     storageBucket: "cafe-ad181.appspot.com",
     messagingSenderId: "618253331013",
@@ -27,10 +32,79 @@ export const SignIn = ({navigation}) => {
     );
 }
 
-export const SignInAccount = ({route}) => {
-    return(
-    <View style = {styles.container}>
-        <Text>{route.params.name}</Text>
+// export const SignInAccount = ({route}) => {
+//     return(
+//     <View style = {styles.container}>
+//         <Text>{route.params.name}</Text>
+//     </View>
+//     );
+// }
+
+export const SignInAccount = () => {
+    if (firebase.apps.length === 0) {
+        firebase.initializeApp(firebaseConfig)
+    }
+    const config = {
+        providers: [
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID, 
+        ],
+        tosUrl: 'https://www.google.com',
+      };
+
+    const email = "sln27_2010@yahoo.com";
+    const password = "lvsp12345"
+    const credential = {
+        email:"sln27_2010@yahoo.com",
+        password:"lvsp12345"
+    }
+    const auther = firebase.auth();
+    useEffect(() => {
+    // This sets up firebaseui
+    try {
+     firebase
+        .auth()
+        //.signInWithEmailAndPassword(email, password);
+    } catch (err) {
+      Alert.alert("There is something wrong!", err.message);
+    }
+    const firebaseAppAuth = firebase.auth();
+    //Auth.signIn(config)
+    //.then(user => console.log(user))
+    //.catch(err => console.log(err));
+/** See the signature above to find out the available providers */
+    const providers = {
+        googleProvider: new firebase.auth.GoogleAuthProvider(),
+    };
+ 
+  },[]);
+  return(
+    <View>
+        <Button title = 'Mail Id' onPress={()=>
+            {
+                const config = {
+                  providers: ['email', 'phone'],
+                  customizations: ['auth_picker', 'theme', 'logo'],
+                  tosUrl: 'https://example.com/tos.htm',
+                  privacyPolicyUrl: 'https://example.com/privacypolicy.htm',
+                };
+            firebase.auth()
+        //down works only on administrator
+            //.signInAnonymously()
+	        //.then(() => {console.log('Signed in. ID:', auth.currentUser.uid)})
+        //false work
+            //.signInWithCredential()
+        //check if works
+            //.onAuthStateChanged(user => {
+            //    if(user){
+            //        console.log("true")}
+            //})
+        //down works properly
+            //.createUserWithEmailAndPassword(email,password)
+            //.then(res => {
+            //    <Text value={res.user.email}>{console.log(res.user.email)}</Text>
+            //})
+        }}>
+        </Button>
     </View>
     );
 }
